@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
+// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper';
-import 'swiper/swiper-bundle.css';
 
-const Recommended = ({ books }) => {
-    return (
-        <div className='py-16'>
-            <h2 className='text-3xl font-semibold mb-6'>Recommended for you</h2>
-            <Swiper
+// import required modules
+import { Pagination, Navigation } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import BookCard from '../books/BookCard';
+import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
+
+
+const Recommened = () => {
+   
+
+    const {data: books = []} = useFetchAllBooksQuery();
+  return (
+    <div className='py-16'>
+         <h2 className='text-3xl font-semibold mb-6'>Recommended for you </h2>
+
+
+         <Swiper
                 slidesPerView={1}
                 spaceBetween={30}
                 navigation={true}
@@ -32,18 +47,20 @@ const Recommended = ({ books }) => {
                 modules={[Pagination, Navigation]}
                 className="mySwiper"
             >
-                {books.map((book, index) => (
-                    <SwiperSlide key={index}>
-                        <div className="book-slide">
-                            <img src={book.cover} alt={book.title} />
-                            <h3>{book.title}</h3>
-                            <p>{book.author}</p>
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-        </div>
-    );
-};
 
-export default Recommended;
+                {
+                   books.length > 0 && books.slice(8, 18).map((book, index) => (
+                        <SwiperSlide key={index}>
+                            <BookCard  book={book} />
+                        </SwiperSlide>
+                    ))
+                }
+
+
+
+            </Swiper>
+    </div>
+  )
+}
+
+export default Recommened
