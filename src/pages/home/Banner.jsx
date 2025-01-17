@@ -10,10 +10,10 @@ const Banner = () => {
         </div>
         
         <div className='md:w-1/2 w-full'>
-            <h1 className='md:text-5xl text-2xl font-medium mb-7'>New Releases This Week</h1>
-            <p className='mb-10'>It's time to update your reading list with some of the latest and greatest releases in the literary world. From heart-pumping thrillers to captivating memoirs, this week's new releases offer something for everyone</p>
+            <h1 className='md:text-5xl text-2xl font-medium mb-7'>Gear Up for Success – Your Ultimate Engineering Bookstore Awaits!</h1>
+            <p className='mb-10'>Whether you’re decoding circuits, building algorithms, or designing skyscrapers, we’ve got the perfect resources to supercharge your engineering journey. Ace your semesters, prep for placements, and build your future—all in one place.</p>
 
-            <button className='btn-primary'>Subscribe</button>
+            <button className='btn-primary'>Start Exploring Now</button>
         </div>
 
        
