@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import getBaseUrl from '../../../utils/baseURL';
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: '/api', // Use relative path to work with Vite proxy
+    baseUrl: `${getBaseUrl()}/api`, // Use the correct backend URL
     credentials: 'omit', // Don't send credentials for cross-origin requests
     prepareHeaders: (headers) => {
         headers.set('Accept', 'application/json');
