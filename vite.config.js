@@ -17,7 +17,13 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        assetFileNames: 'assets/[name][extname]'
+        assetFileNames: ({ name }) => {
+          // Preserve the original folder structure
+          if (name.includes('/books/')) {
+            return 'assets/books/[name][extname]';
+          }
+          return 'assets/[name][extname]';
+        }
       }
     }
   }
