@@ -6,12 +6,17 @@ export const getImgUrl = (imageUrl) => {
         return imageUrl;
     }
     
-    // Try to dynamically import the image
+    // Try loading from public assets first (production)
     try {
-        // For production builds, use the /assets path
-        return `/assets/books/${imageUrl}`;
+        const publicUrl = `/assets/books/${imageUrl}`;
+        return publicUrl;
     } catch (error) {
-        console.error('Error loading image:', error);
-        return '';
+        // If that fails, try loading from src assets (development)
+        try {
+            return new URL(`../assets/books/${imageUrl}`, import.meta.url).href;
+        } catch (error) {
+            console.error('Error loading image:', error);
+            return '';
+        }
     }
 }
