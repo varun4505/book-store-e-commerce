@@ -6,6 +6,12 @@ export const getImgUrl = (imageUrl) => {
         return imageUrl;
     }
     
-    // For local assets, use direct path
-    return `/src/assets/books/${imageUrl}`;
+    // Try to dynamically import the image
+    try {
+        // For production builds, use the /assets path
+        return `/assets/books/${imageUrl}`;
+    } catch (error) {
+        console.error('Error loading image:', error);
+        return '';
+    }
 }
