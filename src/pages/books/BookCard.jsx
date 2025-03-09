@@ -5,6 +5,7 @@ import { getImgUrl } from '../../utils/getImgUrl'
 import { Link } from'react-router-dom'
 import { useDispatch } from'react-redux'
 import { addToCart } from '../../redux/features/cart/cartSlice'
+import defaultBookCover from '../../assets/books/book-1.png'
 
 const BookCard = ({book}) => {
     const dispatch = useDispatch();
@@ -19,10 +20,8 @@ const BookCard = ({book}) => {
         setImgError(true);
     }
 
-    const getFallbackImage = () => {
-        // Use a default placeholder image from your assets
-        return '/assets/books/book-1.png';
-    }
+    // Use imported default image
+    const getFallbackImage = () => defaultBookCover;
 
     return (
         <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col">
