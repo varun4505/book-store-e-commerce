@@ -103,7 +103,7 @@ const Home = () => {
                         </div>
                         <div className="md:w-1/2 bg-amber-100 p-10 md:p-16 flex items-center justify-center">
                             <div className="bg-white p-6 rounded-lg shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                                <div className="w-64 h-80 bg-amber-200"><img src="src/assets/books/book8.jpg" alt="book2"></div>
+                                <div className="w-64 h-80 bg-amber-200"><img src="src/assets/books/book8.jpg" alt="book2" /></div>
                                 <div className="mt-4">
                                     <h3 className="text-xl font-semibold text-gray-800">Current Read</h3>
                                     <p className="text-amber-700">Join the discussion today!</p>
