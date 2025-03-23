@@ -28,7 +28,7 @@ const BookCard = ({book, isLimitedTime}) => {
                         <img
                             src={`${getImgUrl(book?.coverImage)}`}
                             alt={book?.title}
-                            className="book-card-image w-full object-cover h-64 transform hover:scale-110 transition-transform duration-500"
+                            className="book-card-image w-full object-cover h-80 transform hover:scale-110 transition-transform duration-500"
                         />
                     </div>
                 </Link>
