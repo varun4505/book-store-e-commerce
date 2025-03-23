@@ -52,7 +52,7 @@
 }
 
 .book-card-image {
-   @apply h-64 object-cover rounded-t-lg hover:opacity-95 transition-all duration-300;
+   @apply h-80 object-cover rounded-t-lg hover:opacity-95 transition-all duration-300;
 }
 
 .section-title {
