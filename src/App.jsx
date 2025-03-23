@@ -30,7 +30,7 @@ function App() {
       <AuthProvide>
         <Navbar />
     
-        <main className='min-h-screen max-w-screen-7xl mx-auto px-4 py-6 font-primary'>
+        <main className='min-h-screen max-w-screen-8xl mx-auto px-4 py-6 font-primary'>
           <Outlet />
         </main>
         <Footer />
