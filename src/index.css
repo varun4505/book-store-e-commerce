@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Carousel animations */
+@keyframes carouselLTR {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-180px * 23));
+  }
+}
+
+@keyframes carouselRTL {
+  0% {
+    transform: translateX(calc(-180px * 23));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-carousel-ltr {
+  animation: carouselLTR 60s linear infinite;
+}
+
+.animate-carousel-rtl {
+  animation: carouselRTL 60s linear infinite;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  margin: 0 10px;
+}

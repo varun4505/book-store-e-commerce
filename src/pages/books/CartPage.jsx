@@ -1,217 +1,156 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { FiTrash2, FiShoppingBag, FiArrowLeft, FiMinus, FiPlus } from 'react-icons/fi'
 import { getImgUrl } from '../../utils/getImgUrl';
 import { clearCart, removeFromCart } from '../../redux/features/cart/cartSlice';
-import { FiShoppingCart, FiTrash2, FiArrowRight } from 'react-icons/fi';
-import { IoBookOutline } from "react-icons/io5";
 
 const CartPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
     const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
-    
+
     const handleRemoveFromCart = (product) => {
-        dispatch(removeFromCart(product))
+        dispatch(removeFromCart(product));
     }
-    
+
     const handleClearCart = () => {
-        dispatch(clearCart())
+        dispatch(clearCart());
     }
-    
+
     return (
-        <div className="py-10">
-            <div className="max-w-screen-xl mx-auto">
-                {/* Cart Header */}
-                <div className="flex items-center justify-between mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800 flex items-center">
-                        <FiShoppingCart className="mr-3 text-amber-700" />
-                        Your Book Cart
-                    </h1>
-                    {cartItems.length > 0 && (
-                        <button
-                            onClick={handleClearCart}
-                            className="flex items-center gap-2 py-2 px-4 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition-colors"
-                        >
-                            <FiTrash2 />
-                            Clear Cart
-                        </button>
-                    )}
+        <div className="bg-light min-h-screen py-12">
+            <div className="container mx-auto px-4">
+                <div className="flex items-center gap-2 text-primary mb-6">
+                    <Link to="/" className="flex items-center gap-2 text-secondary hover:text-primary transition-colors">
+                        <FiArrowLeft />
+                        <span>Continue Shopping</span>
+                    </Link>
                 </div>
-                
-                {/* Breadcrumbs */}
-                <nav className="flex text-sm mb-6">
-                    <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                        <li className="inline-flex items-center">
-                            <Link to="/" className="text-gray-500 hover:text-amber-700">Home</Link>
-                        </li>
-                        <li>
-                            <div className="flex items-center">
-                                <svg className="w-3 h-3 text-gray-400 mx-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
-                                </svg>
-                                <span className="text-gray-500">Shopping Cart</span>
-                            </div>
-                        </li>
-                    </ol>
-                </nav>
-                
-                {cartItems.length === 0 ? (
-                    <div className="bg-white shadow-md rounded-lg p-10 text-center">
-                        <div className="flex justify-center mb-6">
-                            <div className="w-28 h-28 rounded-full bg-amber-50 flex items-center justify-center">
-                                <IoBookOutline className="text-amber-700 w-14 h-14" />
-                            </div>
+
+                <div className="bg-white rounded-lg shadow-card overflow-hidden">
+                    <div className="p-6 border-b border-gray-100">
+                        <div className="flex justify-between items-center">
+                            <h1 className="text-2xl font-bold text-secondary">Your Shopping Cart</h1>
+                            {cartItems.length > 0 && (
+                                <button
+                                    onClick={handleClearCart}
+                                    className="flex items-center gap-2 text-sm text-error hover:bg-red-50 rounded-md px-3 py-1.5 transition-colors"
+                                >
+                                    <FiTrash2 />
+                                    <span>Clear Cart</span>
+                                </button>
+                            )}
                         </div>
-                        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Your cart is empty</h2>
-                        <p className="text-gray-600 mb-8">Looks like you haven't added any books to your cart yet.</p>
-                        <Link 
-                            to="/"
-                            className="inline-block py-3 px-8 bg-amber-700 text-white rounded-md hover:bg-amber-800 transition-colors"
-                        >
-                            Browse Books
-                        </Link>
                     </div>
-                ) : (
-                    <div className="flex flex-col lg:flex-row gap-8">
-                        {/* Cart Items */}
-                        <div className="lg:w-2/3 bg-white rounded-lg shadow-md overflow-hidden">
-                            <div className="p-6 border-b border-gray-200">
-                                <h2 className="text-xl font-semibold text-gray-800">
-                                    Cart Items ({cartItems.length})
-                                </h2>
-                            </div>
-                            
-                            <ul className="divide-y divide-gray-200 px-6">
-                                {cartItems.map((product) => (
-                                    <li key={product?._id} className="py-6 flex">
-                                        {/* Book Image */}
-                                        <div className="h-32 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 bg-gray-50">
-                                            <img
-                                                src={`${getImgUrl(product?.coverImage)}`}
-                                                alt={product?.title}
-                                                className="h-full w-full object-contain p-2"
-                                            />
-                                        </div>
-                                        
-                                        {/* Book Details */}
-                                        <div className="ml-6 flex-1 flex flex-col">
-                                            <div>
+
+                    {cartItems.length > 0 ? (
+                        <div className="flex flex-col lg:flex-row">
+                            {/* Cart Items */}
+                            <div className="lg:w-2/3 p-6">
+                                <ul className="divide-y divide-gray-100">
+                                    {cartItems.map((product) => (
+                                        <li key={product?._id} className="flex flex-col sm:flex-row py-6 gap-4">
+                                            <div className="sm:w-24 sm:h-24 w-full h-40 flex-shrink-0 rounded-md border border-gray-200 overflow-hidden">
+                                                <img
+                                                    src={`${getImgUrl(product?.coverImage)}`}
+                                                    alt={product?.title}
+                                                    className="h-full w-full object-cover object-center"
+                                                />
+                                            </div>
+
+                                            <div className="flex flex-col flex-1 gap-2">
                                                 <div className="flex justify-between">
-                                                    <Link to={`/books/${product?._id}`}>
-                                                        <h3 className="text-lg font-medium text-gray-800 hover:text-amber-700 transition-colors">
-                                                            {product?.title}
-                                                        </h3>
+                                                    <Link 
+                                                        to={`/books/${product._id}`}
+                                                        className="text-lg font-bold text-secondary hover:text-primary transition-colors"
+                                                    >
+                                                        {product?.title}
                                                     </Link>
-                                                    <p className="text-lg font-medium text-gray-800">${product?.newPrice}</p>
+                                                    <p className="font-bold text-secondary">₹{product?.newPrice}</p>
                                                 </div>
-                                                <p className="mt-1 text-sm text-amber-700">
-                                                    {product?.author || "Unknown Author"}
-                                                </p>
-                                                <p className="mt-1 text-sm text-gray-500 capitalize">
+                                                
+                                                <p className="text-sm text-gray-500 capitalize">
                                                     <span className="font-medium">Category:</span> {product?.category}
                                                 </p>
-                                            </div>
-                                            
-                                            <div className="mt-4 flex justify-between items-end">
-                                                <div className="flex items-center border border-gray-200 rounded-md">
-                                                    <button className="px-3 py-1 text-gray-600 hover:bg-gray-100">-</button>
-                                                    <span className="px-3 py-1 text-gray-800 font-medium">1</span>
-                                                    <button className="px-3 py-1 text-gray-600 hover:bg-gray-100">+</button>
+                                                
+                                                <div className="mt-auto flex justify-between items-end">
+                                                    <div className="flex items-center border rounded-md">
+                                                        <button disabled className="p-2 text-gray-400 border-r">
+                                                            <FiMinus size={14} />
+                                                        </button>
+                                                        <span className="px-4 py-1 text-center">1</span>
+                                                        <button disabled className="p-2 text-gray-400 border-l">
+                                                            <FiPlus size={14} />
+                                                        </button>
+                                                    </div>
+                                                    
+                                                    <button
+                                                        onClick={() => handleRemoveFromCart(product)}
+                                                        className="text-sm text-error hover:bg-red-50 rounded-md px-3 py-1.5 transition-colors flex items-center gap-1"
+                                                    >
+                                                        <FiTrash2 size={14} />
+                                                        <span>Remove</span>
+                                                    </button>
                                                 </div>
-                                                <button
-                                                    onClick={() => handleRemoveFromCart(product)}
-                                                    className="text-sm font-medium text-red-600 hover:text-red-500 flex items-center"
-                                                >
-                                                    <FiTrash2 className="mr-1" />
-                                                    Remove
-                                                </button>
                                             </div>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        
-                        {/* Order Summary */}
-                        <div className="lg:w-1/3">
-                            <div className="bg-white rounded-lg shadow-md p-6 sticky top-6">
-                                <h2 className="text-xl font-semibold text-gray-800 mb-6">Order Summary</h2>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            
+                            {/* Order Summary */}
+                            <div className="lg:w-1/3 bg-gray-50 p-6 border-l border-gray-100">
+                                <h2 className="text-xl font-bold text-secondary mb-6">Order Summary</h2>
                                 
-                                <div className="space-y-4 mb-6">
+                                <div className="space-y-4">
                                     <div className="flex justify-between">
                                         <span className="text-gray-600">Subtotal</span>
-                                        <span className="font-medium">${totalPrice}</span>
+                                        <span className="font-medium">₹{totalPrice}</span>
                                     </div>
+                                    
                                     <div className="flex justify-between">
                                         <span className="text-gray-600">Shipping</span>
-                                        <span className="font-medium">$4.99</span>
+                                        <span className="font-medium">Calculated at checkout</span>
                                     </div>
+                                    
                                     <div className="flex justify-between">
-                                        <span className="text-gray-600">Tax</span>
-                                        <span className="font-medium">${(totalPrice * 0.08).toFixed(2)}</span>
+                                        <span className="text-gray-600">Taxes</span>
+                                        <span className="font-medium">Calculated at checkout</span>
                                     </div>
                                     
                                     <div className="border-t border-gray-200 pt-4 mt-4">
-                                        <div className="flex justify-between">
-                                            <span className="text-lg font-semibold text-gray-800">Total</span>
-                                            <span className="text-lg font-semibold text-gray-800">
-                                                ${(parseFloat(totalPrice) + 4.99 + parseFloat(totalPrice) * 0.08).toFixed(2)}
-                                            </span>
+                                        <div className="flex justify-between font-bold text-lg">
+                                            <span>Total</span>
+                                            <span>₹{totalPrice}</span>
                                         </div>
                                     </div>
+                                    
+                                    <Link
+                                        to="/checkout"
+                                        className="mt-6 w-full btn-primary flex items-center justify-center gap-2 py-3"
+                                    >
+                                        <FiShoppingBag />
+                                        <span>Proceed to Checkout</span>
+                                    </Link>
                                 </div>
-                                
-                                {/* Coupon Code */}
-                                <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Coupon Code</label>
-                                    <div className="flex gap-2">
-                                        <input
-                                            type="text"
-                                            placeholder="Enter code"
-                                            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500"
-                                        />
-                                        <button className="bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300 transition-colors">
-                                            Apply
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                {/* Checkout Button */}
-                                <Link
-                                    to="/checkout"
-                                    className="w-full bg-amber-700 text-white py-3 px-4 rounded-md flex items-center justify-center gap-2 hover:bg-amber-800 transition-colors"
-                                >
-                                    Proceed to Checkout
-                                    <FiArrowRight />
-                                </Link>
-                                
-                                {/* Continue Shopping */}
-                                <Link to="/" className="flex items-center justify-center mt-4 text-amber-700 hover:text-amber-800 transition-colors">
-                                    Continue Shopping
-                                </Link>
                             </div>
                         </div>
-                    </div>
-                )}
-                
-                {/* Book Recommendations */}
-                {cartItems.length > 0 && (
-                    <div className="mt-16">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">You Might Also Enjoy</h2>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                            {[1, 2, 3, 4].map((item) => (
-                                <div key={item} className="bg-white p-4 rounded-md shadow-md">
-                                    <div className="h-40 flex items-center justify-center bg-amber-50 mb-4">
-                                        <div className="w-24 h-36 bg-amber-100 animate-pulse rounded"></div>
-                                    </div>
-                                    <div className="h-5 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
-                                    <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
-                                </div>
-                            ))}
+                    ) : (
+                        <div className="p-12 text-center">
+                            <div className="w-24 h-24 bg-light rounded-full flex items-center justify-center mx-auto mb-6">
+                                <FiShoppingBag className="text-4xl text-gray-400" />
+                            </div>
+                            <h2 className="text-2xl font-bold text-secondary mb-2">Your cart is empty</h2>
+                            <p className="text-gray-500 mb-8">Looks like you haven't added any books to your cart yet.</p>
+                            <Link to="/books" className="btn-primary inline-flex items-center gap-2 px-8 py-3">
+                                <span>Start Shopping</span>
+                                <FiArrowLeft className="transform rotate-180" />
+                            </Link>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     )

@@ -1,6 +1,5 @@
 const getBaseUrl = () => {
-    // Using relative URL to leverage Vite's proxy configuration
-    return "https://book-app-backend-tawny.vercel.app";
+    return "http://localhost:5000"
 }
 
 export default getBaseUrl;

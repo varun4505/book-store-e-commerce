@@ -1,102 +1,88 @@
 import React from 'react'
-import footerLogo from "../assets/footer-logo.png"
-import { FaFacebook, FaInstagram, FaTwitter, FaGoodreads } from "react-icons/fa"
-import { IoBookOutline } from "react-icons/io5"
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
+import { FiMail, FiMap, FiPhone } from 'react-icons/fi'
+import { BsBook } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <footer className="bg-amber-900 text-amber-50 pt-16 pb-10 px-6 sm:px-8 md:px-10">
-      <div className="max-w-screen-2xl mx-auto">
-        {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand Column */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-2">
-              <IoBookOutline className="size-8 text-amber-200" />
-              <span className="text-2xl font-semibold text-amber-100">BookHaven</span>
-            </div>
-            <p className="text-amber-200 max-w-xs leading-relaxed">
-              Your sanctuary for discovering stories that inspire, entertain, and transport you to new worlds.
+    <footer className="bg-secondary text-white transition-colors duration-200">
+      <div className="container mx-auto px-4 py-12">
+        {/* Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          {/* About */}
+          <div>
+            <Link to="/" className="flex items-center gap-2 mb-4">
+              <BsBook className="text-accent text-2xl" />
+              <span className="font-heading text-xl font-bold text-white">BookHaven</span>
+            </Link>
+            <p className="text-gray-300 leading-relaxed mb-4">
+              Your premier destination for discovering and purchasing the best books from around the world.
             </p>
-            <div className="flex gap-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" 
-                className="bg-amber-800 hover:bg-amber-700 p-2.5 rounded-full transition-colors">
-                <FaFacebook size={20} />
+            <div className="flex space-x-4">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="bg-gray-700 hover:bg-accent w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300">
+                <FaFacebook size={18} />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" 
-                className="bg-amber-800 hover:bg-amber-700 p-2.5 rounded-full transition-colors">
-                <FaTwitter size={20} />
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="bg-gray-700 hover:bg-accent w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300">
+                <FaTwitter size={18} />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" 
-                className="bg-amber-800 hover:bg-amber-700 p-2.5 rounded-full transition-colors">
-                <FaInstagram size={20} />
-              </a>
-              <a href="https://goodreads.com" target="_blank" rel="noopener noreferrer" 
-                className="bg-amber-800 hover:bg-amber-700 p-2.5 rounded-full transition-colors">
-                <FaGoodreads size={20} />
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="bg-gray-700 hover:bg-accent w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300">
+                <FaInstagram size={18} />
               </a>
             </div>
           </div>
           
-          {/* Explore Column */}
+          {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-amber-100">Explore</h3>
-            <ul className="space-y-4">
-              <li><Link to="/" className="text-amber-200 hover:text-white transition-colors">Home</Link></li>
-              <li><Link to="/new-releases" className="text-amber-200 hover:text-white transition-colors">New Releases</Link></li>
-              <li><Link to="/bestsellers" className="text-amber-200 hover:text-white transition-colors">Bestsellers</Link></li>
-              <li><Link to="/cart" className="text-amber-200 hover:text-white transition-colors">Your Cart</Link></li>
-              <li><Link to="/orders" className="text-amber-200 hover:text-white transition-colors">Order History</Link></li>
+            <h3 className="text-lg font-bold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              <li><Link to="/about" className="text-gray-300 hover:text-accent transition-colors block py-1">About Us</Link></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-accent transition-colors block py-1">Contact</Link></li>
+              <li><Link to="/faq" className="text-gray-300 hover:text-accent transition-colors block py-1">FAQs</Link></li>
+              <li><Link to="/privacy-policy" className="text-gray-300 hover:text-accent transition-colors block py-1">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="text-gray-300 hover:text-accent transition-colors block py-1">Terms of Service</Link></li>
             </ul>
           </div>
           
-          {/* Categories Column */}
+          {/* Contact */}
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-amber-100">Book Categories</h3>
+            <h3 className="text-lg font-bold mb-4">Contact Us</h3>
             <ul className="space-y-4">
-              <li><Link to="/category/fiction" className="text-amber-200 hover:text-white transition-colors">Fiction</Link></li>
-              <li><Link to="/category/non-fiction" className="text-amber-200 hover:text-white transition-colors">Non-Fiction</Link></li>
-              <li><Link to="/category/business" className="text-amber-200 hover:text-white transition-colors">Business</Link></li>
-              <li><Link to="/category/horror" className="text-amber-200 hover:text-white transition-colors">Horror</Link></li>
-              <li><Link to="/category/adventure" className="text-amber-200 hover:text-white transition-colors">Adventure</Link></li>
+              <li className="flex items-start">
+                <FiMap className="text-accent mt-1 mr-3" />
+                <span className="text-gray-300">123 Book Street, Reading, CA 12345</span>
+              </li>
+              <li className="flex items-center">
+                <FiPhone className="text-accent mr-3" />
+                <span className="text-gray-300">+1 (555) 123-4567</span>
+              </li>
+              <li className="flex items-center">
+                <FiMail className="text-accent mr-3" />
+                <span className="text-gray-300">info@bookhaven.com</span>
+              </li>
             </ul>
           </div>
           
-          {/* Newsletter Column */}
+          {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-amber-100">Join Our Newsletter</h3>
-            <p className="text-amber-200 mb-6 leading-relaxed">
-              Subscribe to receive exclusive offers, new book alerts, and reading recommendations!
-            </p>
-            <div className="flex flex-col space-y-4">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-3 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            <h3 className="text-lg font-bold mb-4">Subscribe to Newsletter</h3>
+            <p className="text-gray-300 mb-4">Stay updated with our latest releases and promotions.</p>
+            <form className="flex flex-col sm:flex-row gap-2">
+              <input 
+                type="email" 
+                placeholder="Your email address" 
+                className="px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-accent border-none"
               />
-              <button className="bg-amber-500 hover:bg-amber-600 px-6 py-3 rounded-md transition-colors font-medium">
+              <button className="bg-accent hover:bg-accent/90 text-white px-4 py-2 rounded-lg transition-colors duration-300">
                 Subscribe
               </button>
-            </div>
+            </form>
           </div>
         </div>
         
-        {/* Divider */}
-        <div className="border-t border-amber-800 my-8"></div>
-        
-        {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-amber-300 text-sm">
-            © {new Date().getFullYear()} BookHaven. All rights reserved.
-          </div>
-          
-          <ul className="flex flex-wrap gap-8 text-sm">
-            <li><Link to="/privacy-policy" className="text-amber-300 hover:text-white transition-colors">Privacy Policy</Link></li>
-            <li><Link to="/terms" className="text-amber-300 hover:text-white transition-colors">Terms of Service</Link></li>
-            <li><Link to="/shipping" className="text-amber-300 hover:text-white transition-colors">Shipping Policy</Link></li>
-            <li><Link to="/contact" className="text-amber-300 hover:text-white transition-colors">Contact Us</Link></li>
-          </ul>
+        {/* Bottom Footer */}
+        <div className="pt-6 border-t border-gray-700 text-center text-gray-400 text-sm">
+          <p>&copy; {new Date().getFullYear()} BookHaven. All rights reserved.</p>
         </div>
       </div>
     </footer>

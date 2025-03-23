@@ -1,159 +1,271 @@
-import { Link } from "react-router-dom";
-import { HiMiniBars3CenterLeft, HiOutlineHeart, HiOutlineShoppingCart } from "react-icons/hi2";
-import { IoSearchOutline, IoBookOutline } from "react-icons/io5";
-import { HiOutlineUser } from "react-icons/hi";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { HiOutlineHeart, HiOutlineShoppingCart, HiOutlineUser } from "react-icons/hi2";
+import { IoSearchOutline } from "react-icons/io5";
+import { HiOutlineMenu } from "react-icons/hi";
+import { IoClose } from "react-icons/io5";
+import { BsBook } from "react-icons/bs";
+
 import avatarImg from "../assets/avatar.png"
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../context/AuthContext";
 
-const categories = [
-    {name: "Fiction", href:"/category/fiction"},
-    {name: "Non-Fiction", href:"/category/non-fiction"},
-    {name: "Business", href:"/category/business"},
-    {name: "Horror", href:"/category/horror"},
-    {name: "Adventure", href:"/category/adventure"},
-]
-
 const navigation = [
-    {name: "Dashboard", href:"/user-dashboard"},
-    {name: "Orders", href:"/orders"},
-    {name: "Cart Page", href:"/cart"},
-    {name: "Check Out", href:"/checkout"},
-]
+    {name: "Home", id: "home-section"},
+    {name: "Best Sellers", id: "best-sellers-section"},
+    {name: "Recommended", id: "new-arrivals-section"},
+    {name: "Categories", id: "categories-section"},
+    {name: "Community", id: "community-section"},
+];
 
 const Navbar = () => {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-    const [isCategoryOpen, setIsCategoryOpen] = useState(false)
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
     const cartItems = useSelector(state => state.cart.cartItems);
+    const navigate = useNavigate();
+    const location = useLocation();
    
-    const {currentUser, logout} = useAuth()
+    const {currentUser, logout} = useAuth();
     
     const handleLogOut = () => {
-        logout()
-    }
+        logout();
+    };
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+            setSearchQuery("");
+        }
+    };
+
+    const scrollToSection = (id) => {
+        setIsMobileMenuOpen(false);
+        console.log(`Attempting to scroll to section: ${id}`);
+        
+        // If not on homepage, go to homepage first then scroll
+        if (location.pathname !== '/') {
+            console.log('Not on homepage, navigating to homepage first');
+            navigate('/');
+            // Wait for navigation to complete before scrolling
+            setTimeout(() => {
+                const element = document.getElementById(id);
+                if (element) {
+                    console.log('Found element, scrolling into view');
+                    element.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    console.log(`Element with id "${id}" not found after navigation`);
+                }
+            }, 500); // Increased timeout to ensure the page has time to load
+        } else {
+            // Already on homepage, just scroll
+            console.log('Already on homepage, scrolling directly');
+            const element = document.getElementById(id);
+            if (element) {
+                console.log('Found element, scrolling into view');
+                element.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                console.log(`Element with id "${id}" not found`);
+            }
+        }
+    };
+
     const token = localStorage.getItem('token');
   
     return (
-        <header className="bg-[#f9f5eb] border-b border-gray-200">
-            <nav className="max-w-screen-2xl mx-auto px-6 sm:px-8 md:px-10 py-5">
-                <div className="flex justify-between items-center">
-                    {/* left side - Logo */}
-                    <div className="flex items-center gap-3">
-                        <Link to="/" className="flex items-center gap-2">
-                            <IoBookOutline className="size-8 text-amber-700" />
-                            <span className="text-xl font-semibold text-amber-800">BookHaven</span>
-                        </Link>
-                    </div>
-                    
-                    {/* Navigation links - Desktop */}
-                    <div className="hidden md:flex items-center space-x-8">
-                        <Link to="/" className="relative text-gray-600 font-medium hover:text-amber-700 transition-colors duration-200 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-amber-700 after:transition-all hover:after:w-full">Home</Link>
-                        <div className="relative">
+        <header className="bg-white shadow-sm sticky top-0 z-50">
+            <div className="max-w-screen-2xl mx-auto px-4 py-4">
+                {/* Main Navigation */}
+                <div className="flex items-center justify-between">
+                    {/* Logo */}
+                    <Link to="/" className="flex items-center gap-2">
+                        <BsBook className="w-8 h-8 text-primary" />
+                        <span className="text-xl font-heading font-bold text-secondary">BookHaven</span>
+                    </Link>
+
+                    {/* Desktop Navigation */}
+                    <nav className="hidden md:flex ml-10 space-x-8">
+                        {navigation.map((item) => (
                             <button 
-                                className="relative text-gray-600 font-medium hover:text-amber-700 transition-colors duration-200 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-amber-700 after:transition-all hover:after:w-full flex items-center gap-1" 
-                                onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+                                key={item.name} 
+                                onClick={() => scrollToSection(item.id)}
+                                className="text-secondary hover:text-primary font-medium font-secondary transition-colors duration-200 cursor-pointer bg-transparent border-none"
                             >
-                                Categories
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                </svg>
+                                {item.name}
                             </button>
-                            
-                            {isCategoryOpen && (
-                                <div className="absolute top-10 left-0 bg-white shadow-lg rounded-md z-30 w-48">
-                                    <ul className="py-2">
-                                        {categories.map((category) => (
-                                            <li key={category.name}>
-                                                <Link 
-                                                    to={category.href} 
-                                                    className="block px-4 py-2.5 text-sm hover:bg-amber-50"
-                                                    onClick={() => setIsCategoryOpen(false)}
-                                                >
-                                                    {category.name}
-                                                </Link>
-                                            </li>
-                                        ))}
+                        ))}
+                    </nav>
+
+                    {/* Search Bar (For medium screens and up) */}
+                    <div className="hidden md:flex items-center justify-end flex-1">
+                        <form onSubmit={handleSearch} className="flex w-full max-w-sm">
+                            <div className="relative w-full">
+                                <input 
+                                    type="text" 
+                                    placeholder="Search books..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="w-full py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-200"
+                                />
+                                <button type="submit" className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                                    <IoSearchOutline className="w-5 h-5 text-gray-400" />
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    {/* Action Icons */}
+                    <div className="flex items-center space-x-4 ml-4">
+                        {/* Favorites */}
+                        <Link to="/favorites" className="text-secondary hover:text-primary transition-colors duration-200">
+                            <HiOutlineHeart className="w-6 h-6" />
+                        </Link>
+
+                        {/* User */}
+                        <div className="relative">
+                            {currentUser ? (
+                                <button 
+                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                    className="text-secondary hover:text-primary transition-colors duration-200"
+                                >
+                                    <img src={avatarImg} alt="" className="size-8 rounded-full ring-2 ring-primary/20" />
+                                </button>
+                            ) : token ? (
+                                <Link to="/dashboard" className="text-secondary hover:text-primary transition-colors duration-200">
+                                    <HiOutlineUser className="w-6 h-6" />
+                                </Link>
+                            ) : (
+                                <Link to="/login" className="text-secondary hover:text-primary transition-colors duration-200">
+                                    <HiOutlineUser className="w-6 h-6" />
+                                </Link>
+                            )}
+
+                            {/* Dropdown Menu */}
+                            {isDropdownOpen && currentUser && (
+                                <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-40 overflow-hidden border transition-colors duration-200">
+                                    <ul className="py-1">
+                                        <li>
+                                            <Link to="/user-dashboard" className="block px-4 py-2 text-sm text-secondary hover:bg-light transition-colors duration-200">
+                                                Dashboard
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/orders" className="block px-4 py-2 text-sm text-secondary hover:bg-light transition-colors duration-200">
+                                                Orders
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/cart" className="block px-4 py-2 text-sm text-secondary hover:bg-light transition-colors duration-200">
+                                                Cart
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <button
+                                                onClick={handleLogOut}
+                                                className="block w-full text-left px-4 py-2 text-sm text-secondary hover:bg-light transition-colors duration-200"
+                                            >
+                                                Logout
+                                            </button>
+                                        </li>
                                     </ul>
                                 </div>
                             )}
                         </div>
-                        <Link to="/new-releases" className="relative text-gray-600 font-medium hover:text-amber-700 transition-colors duration-200 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-amber-700 after:transition-all hover:after:w-full">New Releases</Link>
-                        <Link to="/bestsellers" className="relative text-gray-600 font-medium hover:text-amber-700 transition-colors duration-200 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-amber-700 after:transition-all hover:after:w-full">Bestsellers</Link>
-                    </div>
-                    
-                    {/* search input */}
-                    <div className="relative sm:w-72 w-40 hidden md:block">
-                        <IoSearchOutline className="absolute inline-block left-3.5 top-1/2 -translate-y-1/2 text-gray-500" />
-                        <input type="text" placeholder="Search for books..."
-                            className="bg-white w-full py-2.5 md:px-10 px-6 rounded-full border border-gray-300 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
-                        />
-                    </div>
-                    
-                    {/* right side */}
-                    <div className="flex items-center gap-5">
-                        <button className="md:hidden">
-                            <HiMiniBars3CenterLeft className="size-6" />
-                        </button>
 
-                        <div className="relative">
-                            {currentUser ? (
-                                <>
-                                <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                                    <img src={avatarImg} alt="" className={`size-8 rounded-full ${currentUser ? 'ring-2 ring-amber-500' : ''}`} />
-                                </button>
-                                {/* show dropdowns */}
-                                {isDropdownOpen && (
-                                    <div className="absolute right-0 mt-3 w-52 bg-white shadow-lg rounded-md z-40">
-                                        <ul className="py-2">
-                                            {navigation.map((item) => (
-                                                <li key={item.name} onClick={() => setIsDropdownOpen(false)}>
-                                                    <Link to={item.href} className="block px-5 py-2.5 text-sm hover:bg-amber-50">
-                                                        {item.name}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                            <li>
-                                                <button
-                                                onClick={handleLogOut}
-                                                className="block w-full text-left px-5 py-2.5 text-sm hover:bg-amber-50">Logout</button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                )}
-                                </>
-                            ) : token ? (
-                                <Link to="/dashboard" className='border-b-2 border-amber-600'>Dashboard</Link>
+                        {/* Cart */}
+                        <Link to="/cart" className="text-secondary hover:text-primary transition-colors duration-200 relative">
+                            <HiOutlineShoppingCart className="w-6 h-6" />
+                            {cartItems.length > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-medium">
+                                    {cartItems.length}
+                                </span>
+                            )}
+                        </Link>
+
+                        {/* Mobile Menu Toggle */}
+                        <button 
+                            className="md:hidden text-secondary hover:text-primary transition-colors"
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        >
+                            {isMobileMenuOpen ? (
+                                <IoClose className="w-6 h-6" />
                             ) : (
-                                <Link to="/login" className="hover:text-amber-700">
-                                    <HiOutlineUser className="size-6" />
+                                <HiOutlineMenu className="w-6 h-6" />
+                            )}
+                        </button>
+                    </div>
+                </div>
+
+                {/* Mobile menu */}
+                {isMobileMenuOpen && (
+                    <div className="md:hidden bg-white border-t">
+                        <div className="px-4 py-5 space-y-6">
+                            {/* Mobile search */}
+                            <form onSubmit={handleSearch} className="relative">
+                                <input
+                                    type="text"
+                                    placeholder="Search for books..."
+                                    className="bg-light border border-gray-200 w-full py-2 px-10 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm text-secondary transition-colors duration-200"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                                <button 
+                                    type="submit"
+                                    className="absolute left-3 top-2.5 text-gray-500 hover:text-primary transition-colors"
+                                >
+                                    <IoSearchOutline />
+                                </button>
+                            </form>
+
+                            {/* Mobile Navigation */}
+                            <ul className="space-y-4">
+                                {navigation.map((item) => (
+                                    <li key={item.name}>
+                                        <button 
+                                            onClick={() => scrollToSection(item.id)}
+                                            className="block text-secondary hover:text-primary font-medium transition-colors duration-200 cursor-pointer bg-transparent border-none w-full text-left"
+                                        >
+                                            {item.name}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Mobile icons */}
+                            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                                <Link 
+                                    to="/favorites" 
+                                    className="flex items-center gap-2 text-secondary hover:text-primary transition-colors duration-200"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <HiOutlineHeart className="size-6" />
+                                    <span>Wishlist</span>
+                                </Link>
+                                
+                                <Link 
+                                    to="/cart" 
+                                    className="flex items-center gap-2 text-secondary hover:text-primary transition-colors duration-200"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <HiOutlineShoppingCart className="size-6" />
+                                    <span>Cart ({cartItems.length})</span>
+                                </Link>
+                            </div>
+
+                            {!currentUser && !token && (
+                                <Link 
+                                    to="/login" 
+                                    className="btn-primary w-full flex justify-center"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    Login / Register
                                 </Link>
                             )}
                         </div>
-                        
-                        <button className="hidden sm:block hover:text-amber-700">
-                            <HiOutlineHeart className="size-6" />
-                        </button>
-                        
-                        <Link to="/cart" className="bg-amber-700 hover:bg-amber-800 transition-colors p-2.5 sm:px-6 px-3 flex items-center rounded-full text-white">
-                            <HiOutlineShoppingCart className='size-5' />
-                            {cartItems.length > 0 ? (
-                                <span className="text-sm font-semibold sm:ml-2">{cartItems.length}</span>
-                            ) : (
-                                <span className="text-sm font-semibold sm:ml-2">0</span>
-                            )}
-                        </Link>
                     </div>
-                </div>
-
-                {/* Mobile search bar */}
-                <div className="mt-5 relative md:hidden">
-                    <IoSearchOutline className="absolute inline-block left-3.5 top-1/2 -translate-y-1/2 text-gray-500" />
-                    <input type="text" placeholder="Search for books..."
-                        className="bg-white w-full py-2.5 pl-10 pr-4 rounded-full border border-gray-300 focus:outline-none focus:border-amber-500"
-                    />
-                </div>
-            </nav>
+                )}
+            </div>
         </header>
     )
 }

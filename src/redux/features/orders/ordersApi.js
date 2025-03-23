@@ -1,19 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import getBaseUrl from '../../../utils/baseURL'
+import getBaseUrl from "../../../utils/baseURL";
+
 
 const ordersApi = createApi({
     reducerPath: 'ordersApi',
     baseQuery: fetchBaseQuery({
         baseUrl: `${getBaseUrl()}/api/orders`,
-        credentials: 'include',
-        prepareHeaders: (headers) => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
-            }
-            headers.set('Content-Type', 'application/json');
-            return headers;
-        }
+        credentials: 'include'
     }),
     tagTypes: ['Orders'],
     endpoints: (builder) => ({
@@ -21,15 +14,14 @@ const ordersApi = createApi({
             query: (newOrder) => ({
                 url: "/",
                 method: "POST",
-                body: newOrder
+                body: newOrder,
+                credentials: 'include',
             })
         }),
         getOrderByEmail: (builder.query) ({
-            query: (email) => `/email/${email}`,
-            providesTags: ['Orders']
-        }),
-        getAllOrders: builder.query({
-            query: () => "/all",
+            query: (email) => ({
+                url: `/email/${email}`
+            }),
             providesTags: ['Orders']
         })
     })

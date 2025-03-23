@@ -1,199 +1,171 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-
-import Loading from '../../components/Loading';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { HiViewGridAdd } from "react-icons/hi";
+import React from 'react'
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { 
+  HiOutlineViewGridAdd, 
+  HiOutlineChartBar, 
+  HiOutlineLogout, 
+  HiOutlineSearch,
+  HiOutlineBell,
+  HiOutlineMenuAlt2,
+  HiOutlineCog,
+  HiOutlineBookOpen
+} from "react-icons/hi";
 import { MdOutlineManageHistory } from "react-icons/md";
 
 const DashboardLayout = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   
-  const navigate = useNavigate()
-  
-  // Add state for notifications
-  const [showNotifications, setShowNotifications] = useState(false)
-  const [notifications, setNotifications] = useState([
-    { id: 1, message: "New order received: #ORD-2025-001", unread: true },
-    { id: 2, message: "New book added", unread: true },
-    { id: 3, message: "Book stock updated", unread: true }
-  ])
-
-  const addNewNotification = (message) => {
-    const newNotification = {
-      id: Date.now(), // Use timestamp as unique ID
-      message,
-      unread: true
-    }
-    setNotifications(prev => [newNotification, ...prev])
-  }
-
-  // Add notification handler
-  const handleNotificationClick = () => {
-    setShowNotifications(!showNotifications)
-    // Mark notifications as read when opened
-    setNotifications(notifications.map(n => ({ ...n, unread: false })))
-  }
-
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate("/")
-  }
+    navigate("/");
+  };
+
+  const isActive = (path) => {
+    return location.pathname === path ? true : false;
+  };
 
   return (
-    <section className="flex md:bg-gray-100 min-h-screen overflow-hidden">
-    <aside className="hidden sm:flex sm:flex-col">
-      <a href="/" className="inline-flex items-center justify-center h-20 w-20 bg-purple-600 hover:bg-purple-500 focus:bg-purple-500">
-        <img src="/fav-icon.png" alt="" />
-      </a>
-      <div className="flex-grow flex flex-col justify-between text-gray-500 bg-gray-800">
-        <nav className="flex flex-col mx-4 my-6 space-y-4">
-          
-          <Link to="/dashboard" className="inline-flex items-center justify-center py-3 text-purple-600 bg-white rounded-lg">
-            <span className="sr-only">Dashboard</span>
-            <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
+    <section className="flex bg-gray-50 min-h-screen overflow-hidden">
+      {/* Sidebar */}
+      <aside className="fixed inset-y-0 z-50 flex flex-col flex-shrink-0 w-64 max-h-screen overflow-hidden transition-all transform bg-white border-r shadow-lg lg:z-auto lg:static lg:shadow-none">
+        {/* Sidebar header */}
+        <div className="flex items-center justify-center h-16 px-6 bg-primary text-white">
+          <Link to="/" className="flex items-center gap-2 text-lg font-bold">
+            <img src="/fav-icon.png" alt="Logo" className="w-8 h-8" />
+            <span>BookStore</span>
           </Link>
-          <Link to="/dashboard/add-new-book" className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
-            <span className="sr-only">Add Book</span>
-            <HiViewGridAdd className="h-6 w-6"/>
-          </Link>
-          <Link to="/dashboard/manage-books" className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
-            <span className="sr-only">Documents</span>
-            <MdOutlineManageHistory className="h-6 w-6"/>
-          </Link>
-        </nav>
-        <div className="inline-flex items-center justify-center h-20 w-20 border-t border-gray-700">
-          <button className="p-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
-            <span className="sr-only">Settings</span>
-            <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </button>
         </div>
-      </div>
-    </aside>
-    <div className="flex-grow text-gray-800">
-      <header className="flex items-center h-20 px-6 sm:px-10 bg-white">
-        <button className="block sm:hidden relative flex-shrink-0 p-2 mr-2 text-gray-600 hover:bg-gray-100 hover:text-gray-800 focus:bg-gray-100 focus:text-gray-800 rounded-full">
-          <span className="sr-only">Menu</span>
-            <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
-          </svg>
-        </button>
-        <div className="relative w-full max-w-md sm:-ml-2">
-          <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" className="absolute h-6 w-6 mt-2.5 ml-2 text-gray-400">
-            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-          </svg>
-          <input type="text" role="search" placeholder="Search..." className="py-2 pl-10 pr-4 w-full border-4 border-transparent placeholder-gray-400 focus:bg-gray-50 rounded-lg" />
-        </div>
-        <div className="flex flex-shrink-0 items-center ml-auto">
-          <button className="inline-flex items-center p-2 hover:bg-gray-100 focus:bg-gray-100 rounded-lg">
-            <span className="sr-only">User Menu</span>
-            <div className="hidden md:flex md:flex-col md:items-end md:leading-tight">
-              <span className="font-semibold">John Byro</span>
-              <span className="text-sm text-gray-600">Book Seller</span>
-            </div>
-            <span className="h-12 w-12 ml-2 sm:ml-3 mr-2 bg-gray-100 rounded-full overflow-hidden">
-              <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="user profile photo" className="h-full w-full object-cover"/>
-            </span>
-            <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor" className="hidden sm:block h-6 w-6 text-gray-300">
-              <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg> 
-          </button>
-          <div className="border-l pl-3 ml-3 space-x-1">
-            <button 
-              onClick={handleNotificationClick}
-              className="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full">
-              <span className="sr-only">Notifications</span>
-              {notifications.some(n => n.unread) && (
-                <>
-                  <span className="absolute top-0 right-0 h-2 w-2 mt-1 mr-2 bg-red-500 rounded-full"></span>
-                  <span className="absolute top-0 right-0 h-2 w-2 mt-1 mr-2 bg-red-500 rounded-full animate-ping"></span>
-                </>
-              )}
-              <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-            </button>
 
-            {/* Move notifications dropdown outside the button */}
-            {showNotifications && (
-              <div className="absolute top-16 right-4 w-80 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
-                <div className="px-4 py-2 border-b border-gray-100">
-                  <h3 className="font-semibold text-gray-800">Notifications</h3>
-                </div>
-                {notifications.length > 0 ? (
-                  notifications.map(notification => (
-                    <div 
-                      key={notification.id} 
-                      className={`px-4 py-3 hover:bg-gray-50 transition-colors duration-200 ${
-                        notification.unread ? 'bg-blue-50' : ''
-                      }`}
-                    >
-                      <div className="flex items-center">
-                        {notification.unread && (
-                          <div className="w-2 h-2 bg-blue-600 rounded-full mr-2"></div>
-                        )}
-                        <p className="text-sm text-gray-700">{notification.message}</p>
-                      </div>
-                      <span className="text-xs text-gray-500 mt-1">Just now</span>
-                    </div>
-                  ))
-                ) : (
-                  <div className="px-4 py-3 text-sm text-gray-500">No notifications</div>
-                )}
-                {notifications.length > 0 && (
-                  <div className="px-4 py-2 border-t border-gray-100">
-                    <button 
-                      onClick={() => setNotifications([])} 
-                      className="text-sm text-blue-600 hover:text-blue-700"
-                    >
-                      Clear all
-                    </button>
-                  </div>
-                )}
+        {/* Sidebar content */}
+        <div className="flex flex-col flex-1 overflow-y-auto">
+          <nav className="flex-1 px-4 py-6">
+            <div className="mb-6">
+              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Dashboard</h2>
+              
+              <div className="mt-3 space-y-1">
+                <Link 
+                  to="/dashboard" 
+                  className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg ${
+                    isActive('/dashboard') 
+                    ? 'bg-primary text-white' 
+                    : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <HiOutlineChartBar className="mr-3 h-5 w-5" />
+                  <span>Overview</span>
+                </Link>
               </div>
-            )}
+            </div>
 
-            <button
-            onClick={handleLogout}
-            className="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full">
-              <span className="sr-only">Log out</span>
-              <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-  </svg>
+            <div className="mb-6">
+              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Books</h2>
+              
+              <div className="mt-3 space-y-1">
+                <Link 
+                  to="/dashboard/add-new-book" 
+                  className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg ${
+                    isActive('/dashboard/add-new-book') 
+                    ? 'bg-primary text-white' 
+                    : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <HiOutlineViewGridAdd className="mr-3 h-5 w-5" />
+                  <span>Add New Book</span>
+                </Link>
+                
+                <Link 
+                  to="/dashboard/manage-books" 
+                  className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg ${
+                    isActive('/dashboard/manage-books') 
+                    ? 'bg-primary text-white' 
+                    : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <MdOutlineManageHistory className="mr-3 h-5 w-5" />
+                  <span>Manage Books</span>
+                </Link>
+              </div>
+            </div>
+            
+            <div className="mb-6">
+              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">System</h2>
+              
+              <div className="mt-3 space-y-1">
+                <Link 
+                  to="/dashboard/settings" 
+                  className={`flex items-center px-4 py-2.5 text-sm font-medium rounded-lg ${
+                    isActive('/dashboard/settings') 
+                    ? 'bg-primary text-white' 
+                    : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <HiOutlineCog className="mr-3 h-5 w-5" />
+                  <span>Settings</span>
+                </Link>
+                
+                <button 
+                  onClick={handleLogout}
+                  className="flex w-full items-center px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg"
+                >
+                  <HiOutlineLogout className="mr-3 h-5 w-5" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      {/* Main content */}
+      <div className="flex flex-col flex-1 max-h-screen overflow-hidden lg:pl-0">
+        {/* Header */}
+        <header className="flex items-center justify-between h-16 px-6 bg-white border-b">
+          <div className="flex items-center gap-4">
+            <button className="p-1 text-gray-400 rounded-md lg:hidden hover:text-gray-500">
+              <HiOutlineMenuAlt2 className="w-6 h-6" />
+            </button>
+            
+            <h1 className="text-lg font-semibold text-gray-800">Dashboard</h1>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <div className="relative hidden md:block">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <HiOutlineSearch className="w-5 h-5 text-gray-400" />
+              </div>
+              <input 
+                type="search" 
+                className="block w-full py-2 pl-10 pr-3 leading-5 text-gray-900 placeholder-gray-500 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light focus:border-primary-light sm:text-sm" 
+                placeholder="Search..." 
+              />
+            </div>
+            
+            <button className="relative p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-light">
+              <span className="sr-only">View notifications</span>
+              <HiOutlineBell className="w-6 h-6" />
+              <span className="absolute top-0 right-0 block w-2 h-2 bg-red-400 rounded-full"></span>
+            </button>
+            
+            <div className="border-l h-6 mx-2 border-gray-200"></div>
+            
+            <button className="flex items-center text-sm bg-gray-50 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-light" id="user-menu">
+              <span className="sr-only">Open user menu</span>
+              <img className="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/68.jpg" alt="User avatar" />
+              <span className="hidden md:flex md:items-center ml-2 mr-1">
+                <span className="text-sm font-medium text-gray-700">Admin User</span>
+              </span>
             </button>
           </div>
-        </div>
-      </header>
-      <main className="p-6 sm:p-10 space-y-6 ">
-        <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
-          <div className="mr-6">
-            <h1 className="text-4xl font-semibold mb-2">Dashboard</h1>
-            <h2 className="text-gray-600 ml-0.5">Book Store Inventory</h2>
-          </div>
-          <div className="flex flex-col md:flex-row items-start justify-end -mb-3">
-            <Link to="/dashboard/manage-books" className="inline-flex px-5 py-3 text-purple-600 hover:text-purple-700 focus:text-purple-700 hover:bg-purple-100 focus:bg-purple-100 border border-purple-600 rounded-md mb-3">
-              <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="flex-shrink-0 h-5 w-5 -ml-1 mt-0.5 mr-2">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-              </svg>
-              Manage Books
-            </Link>
-            <Link to="/dashboard/add-new-book" className="inline-flex px-5 py-3 text-white bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 rounded-md ml-6 mb-3">
-              <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="flex-shrink-0 h-6 w-6 text-white -ml-1 mr-2">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-              Add New Book
-            </Link>
-          </div>
-        </div>
-       <Outlet/>
-      </main>
-    </div>
-  </section>
-  )
-}
+        </header>
 
-export default DashboardLayout
+        {/* Main content area */}
+        <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
+          <Outlet />
+        </main>
+      </div>
+    </section>
+  );
+};
+
+export default DashboardLayout;

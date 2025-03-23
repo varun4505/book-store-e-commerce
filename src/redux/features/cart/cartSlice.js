@@ -14,7 +14,7 @@ const cartSlice = createSlice({
             if(!existingItem) {
                 state.cartItems.push(action.payload)
                 Swal.fire({
-                    position: "top-end",
+                    position: "center",
                     icon: "success",
                     title: "Product Added to the Cart",
                     showConfirmButton: false,
@@ -22,6 +22,7 @@ const cartSlice = createSlice({
                   });
             } else(
                 Swal.fire({
+                    position: "center",
                     title: "Already Added to the Cart",
                     text: "You won't be able to revert this!",
                     icon: "warning",

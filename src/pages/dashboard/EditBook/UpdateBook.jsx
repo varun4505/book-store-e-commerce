@@ -106,18 +106,18 @@ const UpdateBook = () => {
         </div>
 
         <InputField
-          label="Old Price"
+          label="Old Price (₹)"
           name="oldPrice"
           type="number"
-          placeholder="Old Price"
+          placeholder="Old Price in Rupees"
           register={register}
         />
 
         <InputField
-          label="New Price"
+          label="New Price (₹)"
           name="newPrice"
           type="number"
-          placeholder="New Price"
+          placeholder="New Price in Rupees"
           register={register}
         />
 
