@@ -5,6 +5,7 @@ import Recommended from './Recommended'
 import FeaturedCategories from './FeaturedCategories'
 import WhyChooseUs from './WhyChooseUs'
 import Community from '../community'
+import RandomizedBooks from './RandomizedBooks'
 
 const Home = () => {
   return (
@@ -18,6 +19,9 @@ const Home = () => {
       <WhyChooseUs />
       <div id="categories-section">
         <FeaturedCategories />
+      </div>
+      <div id="randomized-books-section">
+        <RandomizedBooks />
       </div>
       <div id="new-arrivals-section">
         <Recommended/>

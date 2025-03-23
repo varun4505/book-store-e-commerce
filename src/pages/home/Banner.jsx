@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FiBookOpen } from 'react-icons/fi'
+import { FiBookOpen, FiUsers } from 'react-icons/fi'
 
 // Import all book images
 import book1 from "../../assets/books/book-1.png"
@@ -55,6 +55,22 @@ const Banner = () => {
     { img: youngBucks, alt: "Young Bucks" }
   ];
 
+  // Team members data
+  const teamMembers = [
+    { name: "B Varun", id: "23MID0026" },
+    { name: "Sri Pranav K", id: "23MID0418" },
+    { name: "Sanjai E", id: "23MID0140" },
+    { name: "Abijit I.B", id: "23MIC0013" },
+  ];
+
+  // Function to scroll to books section
+  const scrollToBooks = () => {
+    const booksSection = document.getElementById('books-section');
+    if (booksSection) {
+      booksSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="bg-gradient-to-b from-primary/5 to-light/20 pt-8 pb-16 md:pt-12 md:pb-20 lg:pt-16 lg:pb-20 overflow-hidden -mt-6">
       <div className="container mx-auto px-4">
@@ -74,12 +90,37 @@ const Banner = () => {
               Browse our extensive library with exclusive discounts on every purchase.
             </p>
 
-            <Link to="/books" 
-                  className="btn-primary inline-flex items-center gap-2 px-8 py-4 text-lg rounded-lg
-                             transition-transform hover:scale-105 hover:shadow-lg">
+            <button 
+              onClick={scrollToBooks}
+              className="btn-primary inline-flex items-center gap-2 px-8 py-4 text-lg rounded-lg
+                        transition-transform hover:scale-105 hover:shadow-lg mb-8">
               <FiBookOpen className="text-xl" />
               <span>Explore Books</span>
-            </Link>
+            </button>
+
+            {/* Team members ribbon */}
+            <div className="mt-12 relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-lg -z-10"></div>
+              <div className="py-4 px-5 rounded-lg backdrop-blur-sm border border-primary/10">
+                <div className="flex items-center gap-2 mb-2">
+                  <FiUsers className="text-primary text-lg" />
+                  <h3 className="text-secondary font-semibold text-sm">Group Project by</h3>
+                </div>
+                <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+                  {teamMembers.map((member, index) => (
+                    <div key={index} className="flex items-center">
+                      <span className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary mr-2">
+                        {index + 1}
+                      </span>
+                      <div>
+                        <span className="text-secondary font-medium">{member.name}</span>
+                        <span className="text-xs text-gray-500 ml-1.5">{member.id}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
           
           {/* Automated Carousel */}

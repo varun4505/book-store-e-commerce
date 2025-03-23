@@ -14,7 +14,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
-const categories = ["All Books", "Business", "Fiction", "Horror", "Adventure"];
+const categories = ["All Books", "Business", "Fiction", "Horror", "Adventure", "Technical"];
 
 const TopSellers = () => {
     const [selectedCategory, setSelectedCategory] = useState("All Books");
@@ -25,7 +25,13 @@ const TopSellers = () => {
     // Filter books by category
     const filteredBooks = selectedCategory === "All Books" 
         ? books 
-        : books.filter(book => book.category === selectedCategory.toLowerCase());
+        : books.filter(book => {
+            // Special case for Technical category to include both technical and technology books
+            if (selectedCategory === "Technical") {
+                return book.category === "technical" || book.category === "technology";
+            }
+            return book.category === selectedCategory.toLowerCase();
+        });
 
     // Further filter by bestsellers or deals
     const displayedBooks = activeTab === "bestsellers"
@@ -33,7 +39,7 @@ const TopSellers = () => {
         : filteredBooks.filter(book => book.oldPrice > book.newPrice);
 
     return (
-        <section className="py-16 bg-white">
+        <section id="books-section" className="py-16 bg-white">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
                     <div>
@@ -97,42 +103,44 @@ const TopSellers = () => {
                 </div>
 
                 {displayedBooks.length > 0 ? (
-                    <Swiper
-                        slidesPerView={1}
-                        spaceBetween={24}
-                        navigation={true}
-                        breakpoints={{
-                            640: {
-                                slidesPerView: 2,
-                                spaceBetween: 20,
-                            },
-                            768: {
-                                slidesPerView: 3,
-                                spaceBetween: 24,
-                            },
-                            1024: {
-                                slidesPerView: 4,
-                                spaceBetween: 24,
-                            },
-                            1280: {
-                                slidesPerView: 5,
-                                spaceBetween: 24,
-                            }
-                        }}
-                        modules={[Navigation]}
-                        className="mySwiper"
-                    >
-                        {displayedBooks.map((book, index) => (
-                            <SwiperSlide key={index}>
-                                <div className="h-full">
-                                    <BookCard 
-                                        book={book} 
-                                        isLimitedTime={activeTab === "deals"} 
-                                    />
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
+                    <div className="book-slider">
+                        <Swiper
+                            slidesPerView={1}
+                            spaceBetween={24}
+                            navigation={true}
+                            breakpoints={{
+                                640: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 20,
+                                },
+                                768: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 24,
+                                },
+                                1024: {
+                                    slidesPerView: 4,
+                                    spaceBetween: 24,
+                                },
+                                1280: {
+                                    slidesPerView: 5,
+                                    spaceBetween: 24,
+                                }
+                            }}
+                            modules={[Navigation]}
+                            className="mySwiper"
+                        >
+                            {displayedBooks.map((book, index) => (
+                                <SwiperSlide key={index} className="h-auto flex">
+                                    <div className="h-full w-full">
+                                        <BookCard 
+                                            book={book} 
+                                            isLimitedTime={activeTab === "deals"} 
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
                 ) : (
                     <div className="text-center py-12 bg-light rounded-lg">
                         <p className="text-gray-500">
@@ -149,6 +157,16 @@ const TopSellers = () => {
                     </div>
                 )}
             </div>
+
+            <style jsx>{`
+                .book-slider .swiper-wrapper {
+                    align-items: stretch;
+                }
+                .book-slider .swiper-slide {
+                    height: auto;
+                    display: flex;
+                }
+            `}</style>
         </section>
     )
 }

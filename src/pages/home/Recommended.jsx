@@ -45,8 +45,10 @@ const Recommended = () => {
                         <div className="flex space-x-6" style={{ minWidth: "max-content" }}>
                             {recommendedBooks.length > 0 ? (
                                 recommendedBooks.map((book, index) => (
-                                    <div key={index} className="w-64 flex-shrink-0">
-                                        <BookCard book={book} />
+                                    <div key={index} className="w-64 flex-shrink-0 h-full">
+                                        <div className="h-full">
+                                            <BookCard book={book} />
+                                        </div>
                                     </div>
                                 ))
                             ) : (

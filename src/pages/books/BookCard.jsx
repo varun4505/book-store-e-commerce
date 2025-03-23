@@ -22,13 +22,13 @@ const BookCard = ({book, isLimitedTime}) => {
     
     return (
         <div className="card overflow-hidden transition-all duration-300 h-full flex flex-col">
-            <div className="relative">
+            <div className="relative h-80">
                 <Link to={`/books/${book._id}`}>
-                    <div className="overflow-hidden">
+                    <div className="overflow-hidden h-full">
                         <img
                             src={`${getImgUrl(book?.coverImage)}`}
                             alt={book?.title}
-                            className="book-card-image w-full object-cover h-80 transform hover:scale-110 transition-transform duration-500"
+                            className="book-card-image w-full object-cover h-full transform hover:scale-110 transition-transform duration-500"
                         />
                     </div>
                 </Link>
@@ -58,12 +58,12 @@ const BookCard = ({book, isLimitedTime}) => {
                 <div className="mb-auto">
                     <span className="text-xs text-gray-500 uppercase mb-1 inline-block">{book?.category || 'Fiction'}</span>
                     <Link to={`/books/${book._id}`}>
-                        <h3 className="text-lg font-bold text-secondary hover:text-primary transition-colors mb-2 line-clamp-2">
+                        <h3 className="text-lg font-bold text-secondary hover:text-primary transition-colors mb-2 line-clamp-2 h-14">
                             {book?.title}
                         </h3>
                     </Link>
                     
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2 h-10">
                         {book?.description || 'No description available'}
                     </p>
                 </div>
