@@ -105,7 +105,7 @@ The application is deployed using Vercel:
 
 ## License
 
-This project is licensed under the ISC License.
+Not yet Licensed
 
 ## Authors
 
