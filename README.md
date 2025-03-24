@@ -1,64 +1,118 @@
-# yocto-queue [![](https://badgen.net/bundlephobia/minzip/yocto-queue)](https://bundlephobia.com/result?p=yocto-queue)
+# Book Store MERN Application
 
-> Tiny queue data structure
+A full-stack e-commerce application for buying and selling books built using the MERN stack (MongoDB, Express.js, React.js, Node.js).
 
-You should use this package instead of an array if you do a lot of `Array#push()` and `Array#shift()` on large arrays, since `Array#shift()` has [linear time complexity](https://medium.com/@ariel.salem1989/an-easy-to-use-guide-to-big-o-time-complexity-5dcf4be8a444#:~:text=O(N)%E2%80%94Linear%20Time) *O(n)* while `Queue#dequeue()` has [constant time complexity](https://medium.com/@ariel.salem1989/an-easy-to-use-guide-to-big-o-time-complexity-5dcf4be8a444#:~:text=O(1)%20%E2%80%94%20Constant%20Time) *O(1)*. That makes a huge difference for large arrays.
+## Features
 
-> A [queue](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)) is an ordered list of elements where an element is inserted at the end of the queue and is removed from the front of the queue. A queue works based on the first-in, first-out ([FIFO](https://en.wikipedia.org/wiki/FIFO_(computing_and_electronics))) principle.
+- User authentication and authorization
+- Book browsing with search and filter capabilities
+- Shopping cart functionality
+- Order processing
+- Admin dashboard with statistics
+- Responsive design for all devices
 
-## Install
+## Tech Stack
 
+### Frontend
+- React.js
+- React Router for navigation
+- Redux Toolkit for state management
+- Tailwind CSS for styling
+- Chart.js for data visualization
+- Firebase for authentication
+- Axios for API requests
+- SwiperJS for carousels
+- SweetAlert2 for notifications
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT for authentication
+- bcrypt for password hashing
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- MongoDB database
+
+### Installation
+
+#### Frontend
+1. Clone the repository
+2. Navigate to the frontend directory
+```bash
+cd frontend
 ```
-$ npm install yocto-queue
+3. Install dependencies
+```bash
+npm install
+```
+4. Create a `.env.local` file based on the example file and add your Firebase configuration
+5. Start the development server
+```bash
+npm run dev
 ```
 
-## Usage
-
-```js
-const Queue = require('yocto-queue');
-
-const queue = new Queue();
-
-queue.enqueue('🦄');
-queue.enqueue('🌈');
-
-console.log(queue.size);
-//=> 2
-
-console.log(...queue);
-//=> '🦄 🌈'
-
-console.log(queue.dequeue());
-//=> '🦄'
-
-console.log(queue.dequeue());
-//=> '🌈'
+#### Backend
+1. Navigate to the backend directory
+```bash
+cd backend
+```
+2. Install dependencies
+```bash
+npm install
+```
+3. Create a `.env` file with the following variables:
+```
+DB_URL=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+4. Start the server
+```bash
+npm start
+```
+or for development with auto-reload:
+```bash
+npm run start:dev
 ```
 
-## API
+## Project Structure
 
-### `queue = new Queue()`
+### Frontend
+- `/src/components` - Reusable UI components
+- `/src/pages` - Main application pages
+- `/src/context` - Context providers (Auth)
+- `/src/redux` - Redux store configuration and slices
+- `/src/firebase` - Firebase configuration
+- `/src/utils` - Utility functions
+- `/src/routers` - Route definitions
 
-The instance is an [`Iterable`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols), which means you can iterate over the queue front to back with a “for…of” loop, or use spreading to convert the queue to an array. Don't do this unless you really need to though, since it's slow.
+### Backend
+- `/src/books` - Book related routes, controllers, and models
+- `/src/users` - User authentication and profile management
+- `/src/orders` - Order processing and management
+- `/src/stats` - Admin statistics and reports
+- `/src/middleware` - Custom middleware functions
 
-#### `.enqueue(value)`
+## Deployment
 
-Add a value to the queue.
+The application is deployed using Vercel:
+- Frontend: [https://book-app-frontend-mocha.vercel.app](https://book-app-frontend-mocha.vercel.app)
+- Backend API: Deployed separately on Vercel
 
-#### `.dequeue()`
+## License
 
-Remove the next value in the queue.
+This project is licensed under the ISC License.
 
-Returns the removed value or `undefined` if the queue is empty.
+## Authors
 
-#### `.clear()`
+- Varun - Initial work
 
-Clear the queue.
+## Acknowledgments
 
-#### `.size`
-
-The size of the queue.
-
-## Related
-
-- [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple “Least Recently Used” (LRU) cache
+- React.js and Node.js communities
+- MongoDB
+- Vercel for hosting
