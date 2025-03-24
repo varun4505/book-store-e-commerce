@@ -109,7 +109,7 @@ Not yet Licensed
 
 ## Authors
 
-- Varun - Initial work
+- Varun
 
 ## Acknowledgments
 
