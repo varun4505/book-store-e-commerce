@@ -176,7 +176,7 @@ const Community = () => {
                         
                         {/* Discussion Details */}
                         <div className="lg:w-1/3 p-8 border-y lg:border-y-0 lg:border-x border-gray-100">
-                            <h3 className="text-xl font-bold text-secondary mb-4">June Discussion</h3>
+                            <h3 className="text-xl font-bold text-secondary mb-4">March Discussion</h3>
                             <p className="text-gray-600 mb-6">
                                 Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived.
                             </p>
@@ -188,7 +188,7 @@ const Community = () => {
                                     </div>
                                     <div>
                                         <span className="font-medium">Next Meeting</span>
-                                        <p className="text-sm text-gray-500">June 15, 2023 • 7:00 PM</p>
+                                        <p className="text-sm text-gray-500">31st March 2025 • 7:00 PM</p>
                                     </div>
                                 </div>
                                 
@@ -230,7 +230,7 @@ const Community = () => {
                                     <div className="flex items-center mb-2">
                                         <div className="w-8 h-8 rounded-full bg-primary/20 mr-2"></div>
                                         <div>
-                                            <p className="text-sm font-medium text-secondary">Sarah J.</p>
+                                            <p className="text-sm font-medium text-secondary">Abhinash</p>
                                             <div className="flex text-yellow-400 text-xs">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
                                                     <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
@@ -257,7 +257,7 @@ const Community = () => {
                                     <div className="flex items-center mb-2">
                                         <div className="w-8 h-8 rounded-full bg-blue-100 mr-2"></div>
                                         <div>
-                                            <p className="text-sm font-medium text-secondary">Michael T.</p>
+                                            <p className="text-sm font-medium text-secondary">Pavan Kumar</p>
                                             <div className="flex text-yellow-400 text-xs">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
                                                     <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
