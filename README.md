@@ -1,4 +1,4 @@
-# Book Store MERN Application
+# E-Commerce Website for a BookStore
 
 A full-stack e-commerce application for buying and selling books built using the MERN stack (MongoDB, Express.js, React.js, Node.js).
 
