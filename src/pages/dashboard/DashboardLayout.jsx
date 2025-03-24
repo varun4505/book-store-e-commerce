@@ -151,7 +151,7 @@ const DashboardLayout = () => {
             
             <button className="flex items-center text-sm bg-gray-50 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-light" id="user-menu">
               <span className="sr-only">Open user menu</span>
-              <img className="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/men/253.jpg" alt="User avatar" />
+              <img className="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/men/53.jpg" alt="User avatar" />
               <span className="hidden md:flex md:items-center ml-2 mr-1">
                 <span className="text-sm font-medium text-gray-700">Admin User</span>
               </span>
