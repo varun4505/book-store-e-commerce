@@ -101,7 +101,7 @@ npm run start:dev
 
 The application is deployed using Vercel:
 - Frontend: [https://book-app-frontend-mocha.vercel.app](https://book-app-frontend-mocha.vercel.app)
-- Backend API: Deployed separately on Vercel
+- Backend: [https://book-app-backend-tawny.vercel.app](https://book-app-backend-tawny.vercel.app) 
 
 ## License
 
