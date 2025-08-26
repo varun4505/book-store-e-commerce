@@ -90,6 +90,7 @@ const Banner = () => {
               <FiBookOpen className="text-xl" />
               <span>Explore Books</span>
             </button>
+          </div>
           
           {/* Automated Carousel */}
           <div className="w-full lg:w-3/5 mt-10 lg:mt-0">
