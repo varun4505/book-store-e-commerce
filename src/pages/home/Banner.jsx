@@ -55,13 +55,6 @@ const Banner = () => {
     { img: youngBucks, alt: "Young Bucks" }
   ];
 
-  // Team members data
-  const teamMembers = [
-    { name: "B Varun", id: "23MID0026" },
-    { name: "Sri Pranav K", id: "23MID0418" },
-    { name: "Sanjai E", id: "23MID0140" },
-    { name: "Abijit I.B", id: "23MIC0013" },
-  ];
 
   // Function to scroll to books section
   const scrollToBooks = () => {
@@ -97,31 +90,6 @@ const Banner = () => {
               <FiBookOpen className="text-xl" />
               <span>Explore Books</span>
             </button>
-
-            {/* Team members ribbon */}
-            <div className="mt-12 relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-lg -z-10"></div>
-              <div className="py-4 px-5 rounded-lg backdrop-blur-sm border border-primary/10">
-                <div className="flex items-center gap-2 mb-2">
-                  <FiUsers className="text-primary text-lg" />
-                  <h3 className="text-secondary font-semibold text-sm">Group Project by</h3>
-                </div>
-                <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-                  {teamMembers.map((member, index) => (
-                    <div key={index} className="flex items-center">
-                      <span className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary mr-2">
-                        {index + 1}
-                      </span>
-                      <div>
-                        <span className="text-secondary font-medium">{member.name}</span>
-                        <span className="text-xs text-gray-500 ml-1.5">{member.id}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
           
           {/* Automated Carousel */}
           <div className="w-full lg:w-3/5 mt-10 lg:mt-0">
